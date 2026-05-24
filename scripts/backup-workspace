@@ -104,7 +104,7 @@ if [ "$push_mode" -eq 1 ]; then
     last_run="$(last_run_epoch)"
   fi
   if [ -n "$last_run" ]; then
-    elapsed=$(( "$(now_epoch)" - last_run ))
+    elapsed=$(( $(now_epoch) - last_run ))
     if [ "$elapsed" -lt "$interval_seconds" ]; then
       say "Last push check was less than 48 hours ago; skipping."
       exit 0
