@@ -4,6 +4,10 @@ set -eu
 repo_root="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 cd "$repo_root"
 
+state_dir="$repo_root/.openclaw"
+last_run_file="$state_dir/backup-workspace.last-run"
+interval_seconds=172800
+
 say() {
   printf '%s\n' "$*"
 }
@@ -13,56 +17,118 @@ fail() {
   exit 1
 }
 
-git rev-parse --git-dir >/dev/null 2>&1 || fail "Not inside a Git repository."
+now_epoch() {
+  date +%s
+}
 
-say "Git status:"
-git status --short
+last_run_epoch() {
+  if [ ! -f "$last_run_file" ]; then
+    return 1
+  fi
 
-say ""
-say "Staged diff:"
+  read -r last_run <"$last_run_file" || return 1
+  case "$last_run" in
+    ''|*[!0-9]*)
+      return 1
+      ;;
+  esac
+
+  printf '%s\n' "$last_run"
+}
+
+mark_run() {
+  mkdir -p "$state_dir"
+  now_epoch >"$last_run_file"
+}
+
+preflight() {
+  git rev-parse --git-dir >/dev/null 2>&1 || fail "Not inside a Git repository."
+
+  say "Git status:"
+  git status --short
+
+  say ""
+  say "Nested repository check:"
+  nested_git="$(
+    find . -mindepth 2 -name .git -print
+  )"
+  if [ -n "${nested_git:-}" ]; then
+    printf '%s\n' "$nested_git"
+    fail "Nested Git repositories found. Remove or ignore them before backing up."
+  fi
+  say "None found."
+
+  say ""
+  say "Secret scan:"
+  secret_hits="$(
+    rg --hidden --no-messages \
+      --glob '!.git/**' \
+      --glob '!.openclaw/**' \
+      --glob '!.bootstrap-archive/**' \
+      --glob '!memory/.dreams/**' \
+      --glob '!scripts/backup-workspace' \
+      --glob '!memory/dreaming/**' \
+      --glob '!gemini-budget/memory/**' \
+      --glob '!main/memory/**' \
+      --glob '!tools/site-audit/node_modules/**' \
+      --glob '!tools/site-audit/runs/**' \
+      -n -e 'BEGIN [A-Z ]*PRIVATE KEY' \
+         -e '(^|[^A-Z0-9_])(API_KEY|SECRET|TOKEN|PASSWORD|BW_SESSION|OPENAI_API_KEY|ANTHROPIC_API_KEY)\s*[:=]\s*["'"'"']?[A-Za-z0-9_./+=-]{8,}' \
+         -e 'AKIA[0-9A-Z]{16}' \
+         -e 'gh[pousr]_[A-Za-z0-9_]{20,}' \
+      . || true
+  )"
+  if [ -n "${secret_hits:-}" ]; then
+    printf '%s\n' "$secret_hits"
+    fail "Potential secrets detected. Review before committing."
+  fi
+  say "No obvious secret patterns found."
+
+  say ""
+  say "Preflight complete."
+}
+
+push_mode=0
+if [ "${1:-}" = "--push" ]; then
+  push_mode=1
+  shift
+fi
+
+if [ "$#" -ne 0 ]; then
+  fail "Usage: $0 [--push]"
+fi
+
+if [ "$push_mode" -eq 1 ]; then
+  last_run=""
+  if [ -f "$last_run_file" ]; then
+    last_run="$(last_run_epoch)"
+  fi
+  if [ -n "$last_run" ]; then
+    elapsed=$(( "$(now_epoch)" - last_run ))
+    if [ "$elapsed" -lt "$interval_seconds" ]; then
+      say "Last push check was less than 48 hours ago; skipping."
+      exit 0
+    fi
+  fi
+fi
+
+preflight
+
+if [ "$push_mode" -eq 0 ]; then
+  say "Next step: commit or push only after reviewing the staged diff."
+  exit 0
+fi
+
+git add -A
+
 if git diff --cached --quiet --exit-code; then
-  say "No staged changes."
-else
-  git diff --cached --stat
+  say "No changes to commit."
+  mark_run
+  exit 0
 fi
 
-say ""
-say "Nested repository check:"
-nested_git="$(
-  find . -mindepth 2 -name .git -print
-)"
-if [ -n "${nested_git:-}" ]; then
-  printf '%s\n' "$nested_git"
-  fail "Nested Git repositories found. Remove or ignore them before backing up."
-fi
-say "None found."
-
-say ""
-say "Secret scan:"
-secret_hits="$(
-  rg --hidden --no-messages \
-    --glob '!.git/**' \
-    --glob '!.openclaw/**' \
-    --glob '!.bootstrap-archive/**' \
-    --glob '!memory/.dreams/**' \
-    --glob '!scripts/backup-workspace' \
-    --glob '!memory/dreaming/**' \
-    --glob '!gemini-budget/memory/**' \
-    --glob '!main/memory/**' \
-    --glob '!tools/site-audit/node_modules/**' \
-    --glob '!tools/site-audit/runs/**' \
-    -n -e 'BEGIN [A-Z ]*PRIVATE KEY' \
-       -e '(^|[^A-Z0-9_])(API_KEY|SECRET|TOKEN|PASSWORD|BW_SESSION|OPENAI_API_KEY|ANTHROPIC_API_KEY)\s*[:=]\s*["'"'"']?[A-Za-z0-9_./+=-]{8,}' \
-       -e 'AKIA[0-9A-Z]{16}' \
-       -e 'gh[pousr]_[A-Za-z0-9_]{20,}' \
-    . || true
-)"
-if [ -n "${secret_hits:-}" ]; then
-  printf '%s\n' "$secret_hits"
-  fail "Potential secrets detected. Review before committing."
-fi
-say "No obvious secret patterns found."
-
-say ""
-say "Preflight complete."
-say "Next step: commit or push only after reviewing the staged diff."
+commit_message="Workspace backup: $(date '+%Y-%m-%d')"
+git commit -m "$commit_message"
+git push origin HEAD:main
+mark_run
+say "Committed and pushed workspace backup."
