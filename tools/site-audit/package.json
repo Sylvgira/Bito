@@ -1,0 +1,13 @@
+{
+  "name": "site-audit",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "audit": "node audit-site.mjs"
+  },
+  "dependencies": {
+    "axe-core": "^4.10.3",
+    "lighthouse": "^12.6.1",
+    "playwright": "^1.53.1"
+  }
+}

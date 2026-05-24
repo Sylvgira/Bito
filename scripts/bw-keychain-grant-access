@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+set -eu
+
+service="${BW_KEYCHAIN_SERVICE:-openclaw-bitwarden-master-password}"
+account="${BW_KEYCHAIN_ACCOUNT:-sylvaingirard.bito@gmail.com}"
+keychain="${BW_KEYCHAIN_PATH:-$HOME/Library/Keychains/login.keychain-db}"
+
+if [ ! -t 0 ]; then
+  echo "bw-keychain-grant-access must be run from an interactive terminal" >&2
+  exit 1
+fi
+
+printf 'Mac login password: ' >&2
+stty_state="$(stty -g)"
+trap 'stty "$stty_state" 2>/dev/null || true' EXIT INT TERM HUP
+stty -echo
+IFS= read -r keychain_password
+stty "$stty_state"
+trap - EXIT INT TERM HUP
+printf '\n' >&2
+
+security set-generic-password-partition-list \
+  -S apple-tool:,apple: \
+  -s "$service" \
+  -a "$account" \
+  -k "$keychain_password" \
+  "$keychain" >/dev/null
+
+unset keychain_password
+echo "Granted terminal access to the Bitwarden password item." >&2

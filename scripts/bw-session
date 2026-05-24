@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+set -eu
+
+password_file="${BW_PASSWORD_FILE:-$HOME/.config/openclaw/bw-master-password}"
+
+get_password() {
+  if [ -r "$password_file" ]; then
+    cat "$password_file"
+    return 0
+  fi
+}
+
+password="$(get_password || true)"
+
+if [ -z "${password:-}" ]; then
+  exit 0
+fi
+
+session="$(BW_PASSWORD="$password" bw unlock --raw --passwordenv BW_PASSWORD)"
+unset password
+
+# Emit shell code so the caller can eval it into the current session.
+printf 'export BW_SESSION=%s\n' "$session"

@@ -1,0 +1,19 @@
+# Runtime and local state
+.openclaw/
+.bootstrap-archive/
+
+# Generated memory and dream logs
+memory/.dreams/
+memory/dreaming/
+gemini-budget/memory/
+main/memory/
+
+# Vendored dependencies and generated audit output
+tools/site-audit/node_modules/
+tools/site-audit/runs/
+
+# General local clutter
+*.log
+*.tmp
+*.swp
+.DS_Store

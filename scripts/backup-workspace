@@ -1,0 +1,68 @@
+#!/usr/bin/env sh
+set -eu
+
+repo_root="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
+cd "$repo_root"
+
+say() {
+  printf '%s\n' "$*"
+}
+
+fail() {
+  printf '\033[31m%s\033[0m\n' "$*" >&2
+  exit 1
+}
+
+git rev-parse --git-dir >/dev/null 2>&1 || fail "Not inside a Git repository."
+
+say "Git status:"
+git status --short
+
+say ""
+say "Staged diff:"
+if git diff --cached --quiet --exit-code; then
+  say "No staged changes."
+else
+  git diff --cached --stat
+fi
+
+say ""
+say "Nested repository check:"
+nested_git="$(
+  find . -mindepth 2 -name .git -print
+)"
+if [ -n "${nested_git:-}" ]; then
+  printf '%s\n' "$nested_git"
+  fail "Nested Git repositories found. Remove or ignore them before backing up."
+fi
+say "None found."
+
+say ""
+say "Secret scan:"
+secret_hits="$(
+  rg --hidden --no-messages \
+    --glob '!.git/**' \
+    --glob '!.openclaw/**' \
+    --glob '!.bootstrap-archive/**' \
+    --glob '!memory/.dreams/**' \
+    --glob '!scripts/backup-workspace' \
+    --glob '!memory/dreaming/**' \
+    --glob '!gemini-budget/memory/**' \
+    --glob '!main/memory/**' \
+    --glob '!tools/site-audit/node_modules/**' \
+    --glob '!tools/site-audit/runs/**' \
+    -n -e 'BEGIN [A-Z ]*PRIVATE KEY' \
+       -e '(^|[^A-Z0-9_])(API_KEY|SECRET|TOKEN|PASSWORD|BW_SESSION|OPENAI_API_KEY|ANTHROPIC_API_KEY)\s*[:=]\s*["'"'"']?[A-Za-z0-9_./+=-]{8,}' \
+       -e 'AKIA[0-9A-Z]{16}' \
+       -e 'gh[pousr]_[A-Za-z0-9_]{20,}' \
+    . || true
+)"
+if [ -n "${secret_hits:-}" ]; then
+  printf '%s\n' "$secret_hits"
+  fail "Potential secrets detected. Review before committing."
+fi
+say "No obvious secret patterns found."
+
+say ""
+say "Preflight complete."
+say "Next step: commit or push only after reviewing the staged diff."
