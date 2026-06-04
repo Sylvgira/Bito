@@ -17,3 +17,23 @@ tools/site-audit/runs/
 *.tmp
 *.swp
 .DS_Store
+
+# Nested repositories (subagent workspaces and project checkouts)
+lens/
+spark/
+grid/
+probe/
+processes/
+timberon-cabinets/
+
+# Build artifacts
+dist/
+node_modules/
+src/
+
+# Temporary test files
+*.png
+*.jpg
+*.pdf
+*.crt
+*.key

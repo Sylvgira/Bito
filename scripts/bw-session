@@ -1,23 +1,55 @@
 #!/usr/bin/env sh
+# set -eu
+
+# password_file="${BW_PASSWORD_FILE:-$HOME/.config/openclaw/bw-master-password}"
+
+# get_password() {
+#   if [ -r "$password_file" ]; then
+#     cat "$password_file"
+#     return 0
+#   fi
+# }
+
+# password="$(get_password || true)"
+
+# if [ -z "${password:-}" ]; then
+#   exit 0
+# fi
+
+# session="$(BW_PASSWORD="$password" /Users/sylvaingirard/.nvm/versions/node/v22.22.3/bin/bw unlock --raw --passwordenv BW_PASSWORD)"
+# unset password
+
+# # Emit shell code so the caller can eval it into the current session.
+# printf 'export BW_SESSION=%s\n' "$session"
+
+
+#!/usr/bin/env sh
 set -eu
 
 password_file="${BW_PASSWORD_FILE:-$HOME/.config/openclaw/bw-master-password}"
 
-get_password() {
+# Function to securely read password from file
+get_password_from_file() {
   if [ -r "$password_file" ]; then
     cat "$password_file"
     return 0
+  else
+    echo "Error: Bitwarden master password file not found or not readable: $password_file" >&2
+    exit 1
   fi
 }
 
-password="$(get_password || true)"
+# Get the master password from the file
+master_password=$(get_password_from_file)
 
-if [ -z "${password:-}" ]; then
-  exit 0
-fi
+# Unlock Bitwarden using the master password read from the file
+# The --passwordenv BW_PASSWORD tells bw to look for the password in the BW_PASSWORD environment variable.
+# We set BW_PASSWORD for this specific command only, using the 'master_password' variable.
+session="$(BW_PASSWORD="$master_password" /Users/sylvaingirard/.nvm/versions/node/v22.22.3/bin/bw unlock --raw --passwordenv BW_PASSWORD)"
 
-session="$(BW_PASSWORD="$password" bw unlock --raw --passwordenv BW_PASSWORD)"
-unset password
+# Unset the master password from memory for security after use
+unset master_password
 
-# Emit shell code so the caller can eval it into the current session.
-printf 'export BW_SESSION=%s\n' "$session"
+# Emit shell code for the caller to eval into the current session.
+# This will set the BW_SESSION environment variable.
+printf 'export BW_SESSION=%s\\n' "$session"

@@ -1,0 +1,37 @@
+{
+  "business": "Timberon Cabinets",
+  "url": "https://www.timberoncabinets.com.au/",
+  "assessed_at": "2026-06-01",
+  "visual_design": {
+    "score": 5,
+    "notes": "Clean layout but clearly an old Squarespace 7.0 vanilla template. Stock-feel imagery, generic H1 ('Where Quality Counts'), rigid template structure, no custom design touches. Decent colour palette but spacing and hierarchy are template-default. Feels more 'functional' than 'crafted' — which is a problem for a cabinet maker selling quality craftsmanship."
+  },
+  "tech_stack": {
+    "score": 2,
+    "platform": "Squarespace 7.0",
+    "template_id": "503ba86de4b04953d0f49846",
+    "framework": "Legacy YUI (deprecated), no modern JS framework",
+    "analytics": "UA-60775587-1 (Universal Analytics, not GA4)",
+    "canonical_url": "http:// (not HTTPS)",
+    "hsts": "not enabled",
+    "email": "timberon@iinet.net.au (ISP email)",
+    "notes": "Technically very dated. Squarespace 7.0 is the older template generation, uses deprecated YUI framework. No blog, ecommerce, or dynamic features. Simple brochure site. Positive: Squarespace hosting provides basic reliability."
+  },
+  "build_recency": {
+    "first_created": "~2015",
+    "last_meaningful_update": "2024-12-16 (banner image swap + site rebuild)",
+    "content_last_edited": "2020-02-12",
+    "assessment": "Originally built 2015, content refreshed 2020, most recent update Dec 2024 (banner imagery). Owner has shown willingness to invest recently but only in superficial updates — they haven't modernised the platform."
+  },
+  "composite": {
+    "satisfaction_likelihood": 5,
+    "rebuild_opportunity": "borderline-to-candidate",
+    "rationale": "Mixed signals. Visual design is mediocre (5/10 — clean but dated template). Tech stack is very old (2/10 — Squarespace 7.0/YUI/UA). But the Dec 2024 update suggests the owner is aware their site needs attention and has recently invested time/money. This makes them more open than a typical 'set-and-forget' Squarespace owner. The opportunity is positioning a proper rebuild as the next step after their recent surface-level update. Primary angle remains 'weak quote flow' — the site has 0 forms and no clear enquiry path beyond a contact page link."
+  },
+  "lighthouse_scores": {
+    "performance": 0.36,
+    "accessibility": 0.94,
+    "seo": 0.92
+  },
+  "axe_violations": 5
+}

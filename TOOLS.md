@@ -47,11 +47,20 @@ Add whatever helps you do your job. This is your cheat sheet.
 
 ## Model Routing
 
-- `tiny` -> `openai/gpt-4.1-mini`
-- `coordinator` -> `openai/gpt-5.4-mini`
-- `explorer` -> `openai/gpt-5.4-nano`
-- `heavy` -> `openai/gpt-5.5`
-- `gpt-mini` remains the built-in worker fallback for routine implementation work.
+- `DeepSeek` -> `deepseek/deepseek-v4-flash`
+- `DeepSeek Pro` -> `deepseek/deepseek-v4-pro`
+- `Embedding` -> `google/gemini-embedding-001`
+
+<!--
+## Model Routing — PREVIOUS GEMINI SETUP
+- `Embedding` -> `google/gemini-embedding-001`
+- `Main` -> `google/gemini-2.5-flash`
+- `Flash Latest` -> `google/gemini-flash-latest`
+- `Flash Lite` -> `google/gemini-3.1-flash-lite`
+- `Heavy` -> `google/gemini-2.5-pro`
+- `Heavy Latest` -> `google/gemini-3.1-pro-preview`
+-->
+
 
 ## Operational Basics
 
