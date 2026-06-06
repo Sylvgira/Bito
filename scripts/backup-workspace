@@ -50,7 +50,7 @@ preflight() {
   say ""
   say "Nested repository check:"
   nested_git="$(
-    find . -mindepth 2 -name .git       -not -path '*/lens/*'       -not -path '*/spark/*'       -not -path '*/grid/*'       -not -path '*/probe/*'       -not -path '*/processes/*'       -not -path '*/timberon-cabinets/*'       -print
+    find . -mindepth 2 -name .git       -not -path '*/lens/*'       -not -path '*/spark/*'       -not -path '*/grid/*'       -not -path '*/probe/*'       -not -path '*/processes/*'       -not -path '*/timberon-cabinets/*'       -not -path '*/mate-rates/*'       -print
   )"
   if [ -n "${nested_git:-}" ]; then
     printf '%s\n' "$nested_git"

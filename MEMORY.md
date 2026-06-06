@@ -26,3 +26,18 @@
 - Previous OpenAI aliases (unavailable): `tiny` = `openai/gpt-4.1-mini`, `coordinator` = `openai/gpt-5.4-mini`, `explorer` = `openai/gpt-5.4-nano`, `heavy` = `openai/gpt-5.5`
 - Previous Google Gemini aliases: `Main` = `google/gemini-2.5-flash`, `Flash Latest` = `google/gemini-flash-latest`, `Heavy` = `google/gemini-2.5-pro`, `Heavy Latest` = `google/gemini-3.1-pro-preview`, `Flash Lite` = `google/gemini-3.1-flash-lite`
 -->
+
+## Promoted From Short-Term Memory (2026-06-06)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-05-31.md:18:21 -->
+- Visual Design Threshold + Process: Sylvain corrected the approach: evaluation isn't just about design quality but whether the business is likely to be satisfied with their current site.; A site built last year with a modern framework = satisfied owner = not a candidate regardless of design score.; Jeffersons Flooring (bare contact card) and Pro Pest Control (dated WP/Divi template) are real candidates.; Acron Joinery, Ruve Fencing, Legacy Pools are NOT candidates — they have decent designs and modern builds. [score=0.842 recalls=0 avg=0.620 source=memory/2026-05-31.md:18-21]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-31.md:22:24 -->
+- Visual Design Threshold + Process: Created `/processes/lead-visual-assessment.md` with formalised 3-factor process.; Image analysis (visual assessments) must use heavy model (DeepSeek Pro), not Flash.; Updated AGENTS.md with heavy-model requirement for image analysis. [score=0.842 recalls=0 avg=0.620 source=memory/2026-05-31.md:22-24]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-31.md:5:8 -->
+- Sub-Agent Usage Correction: Sylvain called out that I didn't use sub-agents properly for the visual assessment workflow. I did investigation (Probe) and analysis (Lens) work directly instead of delegating.; Grid sub-agent aborted and I fell back to doing Drive/sheet updates manually instead of re-spawning.; Updated AGENTS.md to require re-spawn on failure rather than silent fallback.; Updated MEMORY.md with sub-agent discipline rule. [score=0.842 recalls=0 avg=0.620 source=memory/2026-05-31.md:5-8]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-31.md:9:9 -->
+- Sub-Agent Usage Correction: Key lesson: classify every task into RESEARCH/BUILD/RECORDS/ANALYSIS/MIXED before starting, spawn the right agents, re-spawn on failure. [score=0.842 recalls=0 avg=0.620 source=memory/2026-05-31.md:9-9]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30-1943.md:23:23 -->
+- Conversation Summary: However, the previous `npm run dev` command was successful, indicating there's *some* Astro project here. The output from `curl -v http://127.0.0.1:3000/` showed: [score=0.823 recalls=0 avg=0.620 source=memory/2026-05-30-1943.md:23-23]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30-1943.md:26:26 -->
+- Conversation Summary: <script type=\"module\" src=\"/src/pages/index.astro?astro&type=script&index=0&lang.ts\"></script> [score=0.823 recalls=0 avg=0.620 source=memory/2026-05-30-1943.md:26-26]

@@ -14,9 +14,9 @@ You can view it here:
 
 [CONCEPT LINK]
 
-I spend my days designing websites professionally and have recently started taking on a small number of independent projects. If the concept feels like a good fit, I'd be happy to turn it into a fully live website for a fixed fee.
+[Optional] Is there a particular feature or experience you'd love the website to have? Let's chat about what would make the most impact for your business.
 
-Either way, I thought it was worth sharing.
+I spend my days designing websites professionally and have recently started taking on a small number of independent projects. If you think it better reflects the business, I'd be happy to help turn it into your actual website. If that's of interest, just reply and we can take it from there!
 
 Cheers,
 
@@ -36,11 +36,11 @@ You can view it here:
 
 [link]
 
+Is there a feature or experience you'd love the website to have? Let's chat about what would work best for a timber flooring business.
+
 I work as a digital designer at a Melbourne agency, and I've recently started taking on a small number of independent website projects. I build these concepts before reaching out because it's often easier to show an idea than explain it.
 
-If it's something you'd like to move forward with, I'd be happy to turn it into a fully live website for a fixed fee.
-
-Either way, I thought it was worth sharing.
+If you think it better reflects the business, I'd be happy to help turn it into your actual website. If that's of interest, just reply and we can take it from there!
 
 Cheers,
 
