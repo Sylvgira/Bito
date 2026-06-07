@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string;
+  summary: string;
+}
+
+const { title, summary } = Astro.props;
+---
+
+<article class="service-detail">
+  <header>
+    <p class="eyebrow">Service</p>
+    <h1>{title}</h1>
+    <p>{summary}</p>
+  </header>
+  <div class="service-detail__body prose">
+    <slot />
+  </div>
+</article>
+
+<style>
+  .service-detail {
+    padding-block: var(--section-y-compact) var(--section-y);
+  }
+
+  header {
+    max-width: var(--container-narrow);
+    margin-bottom: var(--space-7);
+  }
+
+  header h1 {
+    margin-bottom: var(--space-4);
+    font-size: clamp(2.5rem, 6vw, 4.4rem);
+  }
+
+  header p:last-child {
+    margin-bottom: 0;
+    font-size: var(--text-md);
+  }
+
+  .service-detail__body {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-rule);
+  }
+</style>

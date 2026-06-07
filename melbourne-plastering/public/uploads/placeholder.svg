@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Neutral placeholder image</title>
+  <desc id="desc">A plain placeholder with diagonal guide lines.</desc>
+  <rect width="1200" height="800" fill="#f7f7f7"/>
+  <path d="M0 0l1200 800M1200 0L0 800" stroke="#dedede" stroke-width="4"/>
+  <rect x="180" y="160" width="840" height="480" fill="none" stroke="#dedede" stroke-width="4"/>
+</svg>

@@ -1,0 +1,53 @@
+---
+import Section from './Section.astro';
+
+interface Embed {
+  data: {
+    title: string;
+    eyebrow?: string;
+    intro?: string;
+    provider?: string;
+    enabled?: boolean;
+    embedCode: string;
+  };
+}
+
+interface Props {
+  embed: Embed;
+  variant?: 'default' | 'surface';
+}
+
+const { embed, variant = 'default' } = Astro.props;
+const { title, eyebrow, intro, provider, enabled = true, embedCode } = embed.data;
+const trimmedEmbedCode = embedCode.trim();
+---
+
+{enabled && trimmedEmbedCode && (
+  <Section eyebrow={eyebrow} title={title} intro={intro} variant={variant}>
+    <div class="embed-section">
+      <div
+        class="embed-section__frame"
+        data-provider={provider}
+        set:html={trimmedEmbedCode}
+      />
+    </div>
+  </Section>
+)}
+
+<style>
+  .embed-section {
+    width: 100%;
+  }
+
+  .embed-section__frame {
+    min-height: 8rem;
+    overflow: hidden;
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-sm);
+    background: var(--color-page);
+  }
+
+  .embed-section__frame:empty {
+    display: none;
+  }
+</style>

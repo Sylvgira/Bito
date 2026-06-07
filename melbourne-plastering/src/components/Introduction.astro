@@ -1,0 +1,82 @@
+---
+interface Props {
+  headline?: string;
+  body?: string;
+}
+
+const {
+  headline = 'Built around materials, precision, and people.',
+  body = 'Timberon Cabinets has been designing and building custom cabinetry for Melbourne homes from our Thomastown workshop for over a decade. Every project begins with a conversation — about how you live, how you store, and how you want the space to feel. We handle the full process in-house: consultation, design, manufacture, and installation. No subcontractors, no hand-offs. Just a single team accountable for the result.'
+} = Astro.props;
+---
+
+<section class="introduction">
+  <div class="container">
+    <div class="introduction__grid grid-12">
+      <h2 class="introduction__headline">{headline}</h2>
+      <div class="introduction__body">
+        <p>{body}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /*
+   * Introduction — two-column editorial statement.
+   *
+   * Left column: statement headline (spans 5 of 12 grid columns).
+   * Right column: body copy with a gap column separating the two.
+   *
+   * For reveal-on-scroll behaviour, add the `.reveal` class to elements
+   * and import `observeReveal` from lib/reveal.ts in the page script.
+   *
+   * For more complex sequenced reveals (headline → body stagger),
+   * use GSAP + ScrollTrigger (already in package.json):
+   *
+   *   import gsap from 'gsap';
+   *   import { ScrollTrigger } from 'gsap/ScrollTrigger';
+   *   gsap.registerPlugin(ScrollTrigger);
+   *
+   *   const tl = gsap.timeline({
+   *     scrollTrigger: { trigger: '.introduction', start: 'top 75%', once: true }
+   *   });
+   *   tl.from('.introduction__headline', { autoAlpha: 0, y: 20, duration: 0.6 })
+   *     .from('.introduction__body', { autoAlpha: 0, y: 20, duration: 0.6 }, '-=0.3');
+   */
+  .introduction {
+    padding-block: var(--section-y);
+  }
+
+  .introduction__grid {
+    row-gap: var(--space-5);
+    align-items: start;
+  }
+
+  .introduction__headline {
+    grid-column: 1 / span 5;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 500;
+    line-height: 1.15;
+    margin: 0;
+    color: var(--color-heading);
+  }
+
+  .introduction__body {
+    grid-column: 7 / span 6;
+  }
+
+  .introduction__body p {
+    font-size: var(--text-md);
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    .introduction__headline,
+    .introduction__body {
+      grid-column: 1;
+    }
+  }
+</style>

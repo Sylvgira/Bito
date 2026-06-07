@@ -1,0 +1,63 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageIntro from '@components/PageIntro.astro';
+import Section from '@components/Section.astro';
+import CTABand from '@components/CTABand.astro';
+---
+
+<BaseLayout title="About" description="Melbourne Plastering & Building Maintenance — 30 years of heritage and residential plastering expertise across Melbourne.">
+  <PageIntro
+    eyebrow="About"
+    title="30 years of master craftsmanship"
+    intro="Mark Dennerley brings a unique blend of artistic creativity and practical design skills to every project. Heritage specialist, master craftsman."
+  />
+
+  <Section narrow>
+    <div class="prose">
+      <p>
+        Mark Dennerley, owner of Melbourne Plastering &amp; Building Maintenance, has a unique blend of 30 years experience,
+        artistic creativity and practical design skills. He will take on your project as if it was his own — with your best
+        interest at heart.
+      </p>
+      <p>
+        Mark strives for perfection and excellence in whatever project he works on. His keen eye for detail and skills have
+        earned him respect from his customers and fellow tradesmen, who often refer to him as a master craftsman.
+      </p>
+      <p>
+        At Melbourne Plastering &amp; Building Maintenance we have been providing solutions for customers' needs for 30 years.
+        We love what we do — and we do it well.
+      </p>
+      <p>
+        Contact Mark to take the guesswork out of your next project. Put yourself at ease with Mark's friendly professional
+        approach and expertise.
+      </p>
+    </div>
+  </Section>
+
+  <Section variant="surface" eyebrow="Services" title="What we do">
+    <div class="prose">
+      <h3>Residential Plastering</h3>
+      <p>Architecturally designed homes, square set finishes, renovations, extensions, and laser battening.</p>
+
+      <h3>Heritage Plastering</h3>
+      <p>Solid plastering, period restoration, ornamental cornicing and archways, skim coatings, ceiling roses, domes, barrel vaulted ceilings, stucco, and lathe and plaster repairs.</p>
+
+      <h3>Commercial Plastering</h3>
+      <p>Suspended ceilings — acoustic tile and plasterboard — metal stud wall installation, and solid plastering for commercial interiors.</p>
+
+      <h3>Building Maintenance</h3>
+      <p>Demolition, remodelling, general carpentry, painting, tiling, general repairs, and render repairs.</p>
+    </div>
+  </Section>
+
+  <Section eyebrow="Service area" title="Where we work">
+    <div class="prose">
+      <p>Servicing all of Melbourne including: Hawthorn, Toorak, Middle Park, Albert Park, Port Melbourne, St Kilda, Elwood, East Melbourne, North Melbourne, South Melbourne, West Melbourne, Northcote, Clifton Hill, Thornbury, Fitzroy, North Fitzroy, Brunswick, Coburg, Footscray, Seddon, Yarraville, Williamstown, Newport, East Keilor, Niddrie, Essendon, Aberfeldie, Avondale Heights, Kensington, Ascot Vale, Moonee Ponds, Maribyrnong, Flemington, Brighton, East Brighton, Sunshine, Strathmore, Pascoe Vale, Glenroy, Elsternwick, Carlton and Parkville.</p>
+    </div>
+  </Section>
+
+  <CTABand
+    title="Ready to discuss your project?"
+    text="Call Mark for a free quote or inspection — no obligation, just honest advice from a master craftsman."
+  />
+</BaseLayout>

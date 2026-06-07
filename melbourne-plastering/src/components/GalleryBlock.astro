@@ -1,0 +1,213 @@
+---
+interface Props {
+  items?: Array<{ title: string; description?: string; imageUrl?: string }>;
+  variant?: 'grid' | 'feature-left' | 'feature-right' | 'portfolio';
+}
+
+const {
+  variant = 'grid',
+  items = [
+    { title: 'Project image', description: 'Swap this placeholder for client photography.' },
+    { title: 'Detail image', description: 'Use captions when context matters.' },
+    { title: 'Team image', description: 'Keep image treatment simple and consistent.' }
+  ]
+} = Astro.props;
+
+const portfolioItems = items.length >= 4
+  ? items
+  : [
+    { title: 'Residential Project', description: 'Herringbone oak, Malvern' },
+    { title: 'Commercial Fit-out', description: 'Wide-board blackbutt, CBD' },
+    { title: 'Heritage Restore', description: 'Baltic pine, Carlton North' },
+    { title: 'Custom Stain', description: 'European oak, Toorak' }
+  ];
+---
+
+{ variant === 'portfolio' ? (
+  <div class="gallery-block gallery-block--portfolio">
+    <div class="portfolio-track">
+      {portfolioItems.map((item) => (
+        <figure class="portfolio-card">
+          {item.imageUrl ? (
+            <img src={item.imageUrl} alt={item.title} loading="lazy" />
+          ) : (
+            <div aria-hidden="true"></div>
+          )}
+          <figcaption>
+            <strong>{item.title}</strong>
+            {item.description && <span>{item.description}</span>}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+) : (
+  <div class:list={['gallery-block', `gallery-block--${variant}`]}>
+    {items.map((item) => (
+      <figure>
+        <div aria-hidden="true"></div>
+        <figcaption>
+          <strong>{item.title}</strong>
+          {item.description && <span>{item.description}</span>}
+        </figcaption>
+      </figure>
+    ))}
+  </div>
+) }
+
+<style>
+  .gallery-block {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+
+  .gallery-block--feature-left,
+  .gallery-block--feature-right {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  }
+
+  .gallery-block--feature-right {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .gallery-block--feature-left figure:first-child,
+  .gallery-block--feature-right figure:first-child {
+    grid-row: span 2;
+  }
+
+  .gallery-block--feature-right figure:first-child {
+    order: 2;
+  }
+
+  .gallery-block--feature-left figure:first-child > div,
+  .gallery-block--feature-right figure:first-child > div {
+    aspect-ratio: 4 / 4.9;
+  }
+
+  figure {
+    margin: 0;
+  }
+
+  figure > div {
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-md);
+    background:
+      linear-gradient(135deg, transparent 49%, var(--color-rule) 50%, transparent 51%),
+      linear-gradient(45deg, transparent 49%, var(--color-rule) 50%, transparent 51%),
+      var(--color-section);
+  }
+
+  figcaption {
+    display: grid;
+    gap: var(--space-1);
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  figcaption strong {
+    color: var(--color-text);
+  }
+
+  /* --- portfolio variant --- */
+
+  .gallery-block--portfolio {
+    display: block;
+  }
+
+  .portfolio-track {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-2);
+  }
+
+  .portfolio-card {
+    margin: 0;
+  }
+
+  .portfolio-card > div,
+  .portfolio-card > img {
+    aspect-ratio: 3 / 4;
+    border: none;
+    border-radius: var(--radius-xs);
+  }
+
+  .portfolio-card > div {
+    background:
+      linear-gradient(135deg, transparent 48%, var(--color-rule) 49%, transparent 51%),
+      linear-gradient(45deg, transparent 48%, var(--color-rule) 49%, transparent 51%),
+      var(--color-section);
+  }
+
+  .portfolio-card > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .portfolio-card:nth-child(1) > div {
+    background:
+      linear-gradient(to top, rgba(0,0,0,0.3), transparent),
+      linear-gradient(135deg, transparent 48%, var(--color-rule) 49%, transparent 51%),
+      #4a3728;
+  }
+
+  .portfolio-card:nth-child(2) > div {
+    background:
+      linear-gradient(to top, rgba(0,0,0,0.3), transparent),
+      linear-gradient(135deg, transparent 48%, var(--color-rule) 49%, transparent 51%),
+      #5c4a3a;
+  }
+
+  .portfolio-card:nth-child(3) > div {
+    background:
+      linear-gradient(to top, rgba(0,0,0,0.3), transparent),
+      linear-gradient(135deg, transparent 48%, var(--color-rule) 49%, transparent 51%),
+      #3d2e20;
+  }
+
+  .portfolio-card:nth-child(4) > div {
+    background:
+      linear-gradient(to top, rgba(0,0,0,0.3), transparent),
+      linear-gradient(135deg, transparent 48%, var(--color-rule) 49%, transparent 51%),
+      #6b5640;
+  }
+
+  .portfolio-card figcaption {
+    margin-top: var(--space-3);
+  }
+
+  @media (max-width: 760px) {
+    .gallery-block {
+      grid-template-columns: 1fr;
+    }
+
+    .gallery-block--feature-left figure:first-child,
+    .gallery-block--feature-right figure:first-child {
+      grid-row: auto;
+      order: initial;
+    }
+
+    .gallery-block--feature-left figure:first-child > div,
+    .gallery-block--feature-right figure:first-child > div {
+      aspect-ratio: 4 / 3;
+    }
+
+    .portfolio-track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .portfolio-card > div {
+      aspect-ratio: 3 / 4;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .portfolio-track {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

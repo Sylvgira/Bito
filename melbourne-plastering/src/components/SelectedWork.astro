@@ -1,0 +1,186 @@
+---
+interface Project {
+  title: string;
+  description?: string;
+  imageUrl?: string;
+}
+
+interface Props {
+  projects?: Project[];
+}
+
+const {
+  projects = [
+    { title: 'Kitchen renovation', description: 'Custom cabinetry, Ivanhoe', imageUrl: '/timberon-cabinets/uploads/_MG_5428.jpg' },
+    { title: 'Bathroom vanity', description: 'Slimline joinery, Reservoir', imageUrl: '/timberon-cabinets/uploads/_MG_5515.jpg' },
+    { title: 'Laundry fit-out', description: 'Full-height cabinetry, Preston', imageUrl: '/timberon-cabinets/uploads/_MG_5463.jpg' }
+  ]
+} = Astro.props;
+---
+
+<section class="selected-work">
+  <div class="container">
+    <div class="selected-work__header grid-12">
+      <p class="section-heading">SELECTED WORK</p>
+      <a href="/services/" class="selected-work__all-link">VIEW ALL WORK &rarr;</a>
+    </div>
+
+    <div class="selected-work__grid grid-12">
+      {projects.map((project) => (
+        <article class="selected-work__card">
+          <div class="selected-work__image-wrap">
+            {project.imageUrl ? (
+              <img src={project.imageUrl} alt={project.title} loading="lazy" />
+            ) : (
+              <div class="selected-work__placeholder" aria-hidden="true"></div>
+            )}
+          </div>
+          <div class="selected-work__info">
+            <div class="selected-work__info-row">
+              <strong class="selected-work__title">{project.title}</strong>
+              <span class="selected-work__description">{project.description ?? ''}</span>
+            </div>
+            <span class="selected-work__location">Thomastown, VIC</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .selected-work {
+    padding-block-start: calc(var(--section-y) * 1.2);
+    padding-block-end: calc(var(--section-y) * 0.75);
+  }
+
+  .selected-work__header {
+    align-items: baseline;
+    margin-bottom: var(--space-7);
+  }
+
+  .selected-work__header .section-heading {
+    grid-column: 1 / span 6;
+    margin-bottom: 0;
+  }
+
+  .selected-work__all-link {
+    grid-column: 10 / span 3;
+    justify-self: end;
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.03em;
+  }
+
+  .selected-work__all-link:hover {
+    color: var(--color-heading);
+  }
+
+  .selected-work__grid {
+    row-gap: var(--space-7);
+  }
+
+  .selected-work__card {
+    grid-column: span 4;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .selected-work__image-wrap {
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    margin-bottom: var(--space-4);
+  }
+
+  .selected-work__image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+  }
+
+  .selected-work__card:hover .selected-work__image-wrap img {
+    transform: scale(1.04);
+  }
+
+  .selected-work__placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--color-border);
+  }
+
+  .selected-work__info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-bottom: var(--space-1);
+  }
+
+  .selected-work__title {
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    font-weight: 500;
+    color: var(--color-heading);
+    line-height: 1.25;
+    flex-shrink: 0;
+  }
+
+  .selected-work__description {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.4;
+    text-align: right;
+  }
+
+  .selected-work__location {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 860px) {
+    .selected-work__header .section-heading {
+      grid-column: 1 / span 6;
+    }
+
+    .selected-work__all-link {
+      grid-column: 7 / span 6;
+    }
+
+    .selected-work__card {
+      grid-column: span 6;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .selected-work__header {
+      row-gap: var(--space-3);
+    }
+
+    .selected-work__header .section-heading,
+    .selected-work__all-link,
+    .selected-work__card {
+      grid-column: 1;
+    }
+
+    .selected-work__all-link {
+      justify-self: start;
+    }
+
+    .selected-work__info-row {
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .selected-work__description {
+      text-align: left;
+    }
+  }
+</style>

@@ -1,0 +1,191 @@
+local_backend: true
+
+backend:
+  name: github
+  repo: owner/repository
+  branch: main
+
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: settings
+    label: Site Settings
+    files:
+      - name: site
+        label: Site Details
+        file: src/content/settings/site.json
+        format: json
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Description, name: description, widget: text }
+          - { label: URL, name: url, widget: string }
+          - { label: Email, name: email, widget: string, required: false }
+          - { label: Phone, name: phone, widget: string, required: false }
+          - { label: Address, name: address, widget: text, required: false }
+          - { label: CTA Label, name: ctaLabel, widget: string, required: false }
+          - { label: CTA URL, name: ctaUrl, widget: string, required: false }
+          - label: Social Links
+            name: socialLinks
+            widget: list
+            required: false
+            fields:
+              - { label: Label, name: label, widget: string }
+              - { label: URL, name: url, widget: string }
+
+  - name: pages
+    label: Pages
+    files:
+      - name: home
+        label: Home Page
+        file: src/content/pages/home.json
+        format: json
+        fields:
+          - label: Hero
+            name: hero
+            widget: object
+            fields:
+              - label: Variant
+                name: variant
+                widget: select
+                default: simple
+                options:
+                  - { label: Simple, value: simple }
+                  - { label: Split Media, value: split-media }
+                  - { label: Centered, value: centered }
+                  - { label: Service Led, value: service-led }
+                  - { label: Full Image, value: image-full }
+              - label: Media Position
+                name: mediaPosition
+                widget: select
+                default: right
+                options:
+                  - { label: Right, value: right }
+                  - { label: Left, value: left }
+                hint: Applies to hero variants that show a media or proof panel.
+              - { label: Eyebrow, name: eyebrow, widget: string, required: false }
+              - { label: Title, name: title, widget: string }
+              - { label: Intro, name: intro, widget: text }
+              - { label: Primary Label, name: primaryLabel, widget: string, required: false }
+              - { label: Primary URL, name: primaryUrl, widget: string, required: false }
+              - { label: Secondary Label, name: secondaryLabel, widget: string, required: false }
+              - { label: Secondary URL, name: secondaryUrl, widget: string, required: false }
+              - { label: Media Label, name: mediaLabel, widget: string, required: false }
+              - { label: Media Title, name: mediaTitle, widget: string, required: false }
+              - { label: Media Text, name: mediaText, widget: text, required: false }
+              - label: Service Highlights
+                name: highlights
+                widget: list
+                required: false
+                field: { label: Highlight, name: highlight, widget: string }
+          - label: Services Layout
+            name: servicesVariant
+            widget: select
+            default: grid
+            options:
+              - { label: Grid, value: grid }
+              - { label: List, value: list }
+              - { label: Featured First, value: featured-first }
+              - { label: Icon Grid, value: icon-grid }
+          - label: Testimonials Layout
+            name: testimonialsVariant
+            widget: select
+            default: grid
+            options:
+              - { label: Grid, value: grid }
+              - { label: Stacked, value: stacked }
+          - label: Gallery Layout
+            name: galleryVariant
+            widget: select
+            default: grid
+            options:
+              - { label: Grid, value: grid }
+              - { label: Feature Left, value: feature-left }
+              - { label: Feature Right, value: feature-right }
+              - { label: Portfolio, value: portfolio }
+          - label: CTA Layout
+            name: ctaVariant
+            widget: select
+            default: band
+            options:
+              - { label: Band, value: band }
+              - { label: Split, value: split }
+              - { label: Inline, value: inline }
+
+  - name: services
+    label: Services
+    folder: src/content/services
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Summary, name: summary, widget: text }
+      - { label: Order, name: order, widget: number, default: 99, value_type: int }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: SEO Title, name: seoTitle, widget: string, required: false }
+      - { label: SEO Description, name: seoDescription, widget: text, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: posts
+    label: News
+    folder: src/content/posts
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Summary, name: summary, widget: text }
+      - { label: Publish Date, name: publishDate, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - { label: Author, name: author, widget: string, default: Team }
+      - { label: Draft, name: draft, widget: boolean, default: false }
+      - { label: SEO Title, name: seoTitle, widget: string, required: false }
+      - { label: SEO Description, name: seoDescription, widget: text, required: false }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: testimonials
+    label: Testimonials
+    folder: src/content/testimonials
+    create: true
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    fields:
+      - { label: Quote, name: quote, widget: text }
+      - { label: Name, name: name, widget: string }
+      - { label: Role, name: role, widget: string, required: false }
+      - { label: Order, name: order, widget: number, default: 99, value_type: int }
+
+  - name: faqs
+    label: FAQs
+    folder: src/content/faqs
+    create: true
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    fields:
+      - { label: Question, name: question, widget: string }
+      - { label: Answer, name: answer, widget: text }
+      - { label: Order, name: order, widget: number, default: 99, value_type: int }
+
+  - name: embeds
+    label: Embeds
+    folder: src/content/embeds
+    create: true
+    slug: "{{slug}}"
+    extension: json
+    format: json
+    description: Trusted admin-only sections for third-party embed code from providers such as Elfsight, SociableKIT, Tagembed, Google Maps, or booking tools.
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Eyebrow, name: eyebrow, widget: string, required: false }
+      - { label: Intro, name: intro, widget: text, required: false }
+      - { label: Provider, name: provider, widget: string, required: false }
+      - { label: Enabled, name: enabled, widget: boolean, default: true }
+      - { label: Order, name: order, widget: number, default: 99, value_type: int }
+      - label: Embed Code
+        name: embedCode
+        widget: text
+        hint: Paste the full embed code from a trusted provider. This field may include scripts and should only be edited by trusted site admins.

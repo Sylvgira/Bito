@@ -1,0 +1,49 @@
+---
+interface Props {
+  logos?: string[];
+}
+
+const { logos = ['Local partner', 'Industry body', 'Community group', 'Supplier'] } = Astro.props;
+---
+
+<div class="logo-strip" aria-label="Associated organisations">
+  {logos.map((logo) => <span>{logo}</span>)}
+</div>
+
+<style>
+  .logo-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-md);
+  }
+
+  .logo-strip span {
+    display: grid;
+    min-height: 6rem;
+    place-items: center;
+    padding: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  .logo-strip span + span {
+    border-left: 1px solid var(--color-rule);
+  }
+
+  @media (max-width: 760px) {
+    .logo-strip {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .logo-strip span:nth-child(odd) {
+      border-left: 0;
+    }
+
+    .logo-strip span:nth-child(n + 3) {
+      border-top: 1px solid var(--color-rule);
+    }
+  }
+</style>

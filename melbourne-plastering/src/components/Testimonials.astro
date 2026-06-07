@@ -1,0 +1,72 @@
+---
+interface Testimonial {
+  data: {
+    quote: string;
+    name: string;
+    role?: string;
+  };
+}
+
+interface Props {
+  testimonials: Testimonial[];
+  variant?: 'grid' | 'stacked';
+}
+
+const { testimonials, variant = 'grid' } = Astro.props;
+---
+
+<div class:list={['testimonials', `testimonials--${variant}`]}>
+  {testimonials.map((item) => (
+    <figure>
+      <blockquote>{item.data.quote}</blockquote>
+      <figcaption>
+        <strong>{item.data.name}</strong>
+        {item.data.role && <span>{item.data.role}</span>}
+      </figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .testimonials {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+
+  .testimonials--stacked {
+    grid-template-columns: 1fr;
+    max-width: var(--container-narrow);
+  }
+
+  figure {
+    margin: 0;
+    padding: var(--space-5);
+    border-left: 3px solid var(--brand-primary);
+    background: var(--color-page);
+  }
+
+  blockquote {
+    margin: 0 0 var(--space-5);
+    color: var(--color-text);
+    font-size: var(--text-md);
+    line-height: 1.55;
+  }
+
+  figcaption {
+    display: grid;
+    gap: var(--space-1);
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+
+  figcaption strong {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 760px) {
+    .testimonials {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

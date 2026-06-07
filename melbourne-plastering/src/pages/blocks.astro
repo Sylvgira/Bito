@@ -1,0 +1,261 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/Hero.astro';
+import Section from '@components/Section.astro';
+import ServiceGrid from '@components/ServiceGrid.astro';
+import Testimonials from '@components/Testimonials.astro';
+import GalleryBlock from '@components/GalleryBlock.astro';
+import CTABand from '@components/CTABand.astro';
+import FAQList from '@components/FAQList.astro';
+import LogoStrip from '@components/LogoStrip.astro';
+import EmbedSection from '@components/EmbedSection.astro';
+import ContactBlock from '@components/ContactBlock.astro';
+import TrustBar from '@components/TrustBar.astro';
+import { byOrder } from '../lib/content';
+
+const services = byOrder(await getCollection('services'));
+const testimonials = byOrder(await getCollection('testimonials'));
+const faqs = byOrder(await getCollection('faqs'));
+const embeds = byOrder(await getCollection('embeds')).filter((embed) => embed.data.enabled);
+
+const heroBase = {
+  eyebrow: 'Hero variant',
+  title: 'A flexible starting point for small-business sites',
+  intro: 'Use variants to change page shape without changing the brand token system.',
+  primaryLabel: 'Primary action',
+  primaryUrl: '/contact/',
+  secondaryLabel: 'Secondary action',
+  secondaryUrl: '/services/',
+  mediaLabel: 'Proof point',
+  mediaTitle: 'A reusable media or service panel',
+  mediaText: 'Replace this with client photography, a location cue, or a concise trust signal.',
+  highlights: ['Plan', 'Build', 'Support']
+};
+
+const trustItems = [
+  { label: '20+ Years Experience' },
+  { label: 'Licensed & Insured' },
+  { label: 'Premium Materials' },
+  { label: '5-Star Rated' }
+];
+---
+
+<BaseLayout
+  title="Blocks"
+  description="Internal block library showing available component variants."
+  noindex
+>
+  <section class="blocks-intro">
+    <div class="container">
+      <p class="eyebrow">Internal reference</p>
+      <h1>Block library</h1>
+      <p>
+        Use this page during initial builds to compare component variants. Keep it out of primary navigation unless a
+        project needs a public style guide.
+      </p>
+    </div>
+  </section>
+
+  <div class="blocks-nav container" aria-label="Block categories">
+    <a href="#heroes">Heroes</a>
+    <a href="#services">Services</a>
+    <a href="#proof">Proof</a>
+    <a href="#media">Media</a>
+    <a href="#ctas">CTAs</a>
+    <a href="#trust-bar">Trust</a>
+    <a href="#utility">Utility</a>
+  </div>
+
+  <section id="heroes" class="blocks-group">
+    <div class="container">
+      <p class="eyebrow">Heroes</p>
+      <h2>Hero variants</h2>
+    </div>
+    <Hero {...heroBase} variant="image-full" />
+    <Hero {...heroBase} variant="simple" />
+    <Hero {...heroBase} variant="split-media" mediaPosition="right" />
+    <Hero {...heroBase} variant="split-media" mediaPosition="left" />
+    <Hero {...heroBase} variant="centered" />
+    <Hero {...heroBase} variant="service-led" />
+  </section>
+
+  <Section id="services" eyebrow="Services" title="Service list variants">
+    <div class="block-stack">
+      <div>
+        <h3>Icon Grid</h3>
+        <ServiceGrid services={services} variant="icon-grid" />
+      </div>
+      <div>
+        <h3>Grid</h3>
+        <ServiceGrid services={services} variant="grid" />
+      </div>
+      <div>
+        <h3>List</h3>
+        <ServiceGrid services={services} variant="list" />
+      </div>
+      <div>
+        <h3>Featured first</h3>
+        <ServiceGrid services={services} variant="featured-first" />
+      </div>
+    </div>
+  </Section>
+
+  <Section id="proof" variant="surface" eyebrow="Proof" title="Trust and FAQ variants">
+    <div class="block-stack">
+      <div>
+        <h3>Testimonials grid</h3>
+        <Testimonials testimonials={testimonials} variant="grid" />
+      </div>
+      <div>
+        <h3>Testimonials stacked</h3>
+        <Testimonials testimonials={testimonials} variant="stacked" />
+      </div>
+      <div>
+        <h3>Logo strip</h3>
+        <LogoStrip />
+      </div>
+      <div>
+        <h3>FAQ list</h3>
+        <FAQList faqs={faqs} />
+      </div>
+    </div>
+  </Section>
+
+  <Section id="media" eyebrow="Media" title="Gallery variants">
+    <div class="block-stack">
+      <div>
+        <h3>Portfolio</h3>
+        <GalleryBlock variant="portfolio" />
+      </div>
+      <div>
+        <h3>Grid</h3>
+        <GalleryBlock variant="grid" />
+      </div>
+      <div>
+        <h3>Feature left</h3>
+        <GalleryBlock variant="feature-left" />
+      </div>
+      <div>
+        <h3>Feature right</h3>
+        <GalleryBlock variant="feature-right" />
+      </div>
+    </div>
+  </Section>
+
+  <section id="ctas" class="blocks-group">
+    <div class="container">
+      <p class="eyebrow">CTAs</p>
+      <h2>CTA variants</h2>
+    </div>
+    <CTABand
+      title="Band call to action"
+      text="Use for major conversion moments between sections or near the end of a page."
+      label="Contact"
+      href="/contact/"
+      variant="band"
+    />
+    <CTABand
+      title="Split call to action"
+      text="Use when the CTA needs stronger separation without changing page hierarchy."
+      label="Contact"
+      href="/contact/"
+      variant="split"
+    />
+    <CTABand
+      title="Inline call to action"
+      text="Use inside quieter pages where a full band would feel too heavy."
+      label="Contact"
+      href="/contact/"
+      variant="inline"
+    />
+  </section>
+
+  <section id="trust-bar" class="blocks-group">
+    <div class="container" style="margin-bottom:var(--space-6)">
+      <p class="eyebrow">Trust</p>
+      <h2>Trust bar</h2>
+    </div>
+    <TrustBar
+      title="Why choose Jefferson&apos;s?"
+      items={trustItems}
+      ctaLabel="Get a Quote"
+      ctaUrl="/contact/"
+    />
+  </section>
+
+  <Section id="utility" variant="surface" eyebrow="Utility" title="Utility blocks">
+    <div class="block-stack">
+      <div>
+        <h3>Contact block</h3>
+        <ContactBlock email="hello@example.com" phone="+61 400 000 000" address="123 Example Street, Melbourne VIC" />
+      </div>
+      {embeds.map((embed) => (
+        <div>
+          <h3>Embed section</h3>
+          <EmbedSection embed={embed} />
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .blocks-intro {
+    padding-block: var(--section-y-compact);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .blocks-intro h1 {
+    margin-bottom: var(--space-4);
+    font-size: clamp(2.5rem, 6vw, 4.4rem);
+  }
+
+  .blocks-intro p:last-child {
+    max-width: var(--container-narrow);
+    margin-bottom: 0;
+    font-size: var(--text-md);
+  }
+
+  .blocks-nav {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--color-rule);
+    background: var(--color-page);
+  }
+
+  .blocks-nav a {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .blocks-group {
+    padding-block: var(--section-y-compact);
+  }
+
+  .blocks-group h2 {
+    margin-bottom: var(--space-6);
+  }
+
+  .blocks-group :global(.hero + .hero),
+  .blocks-group :global(.cta-band + .cta-band) {
+    margin-top: var(--space-6);
+  }
+
+  .block-stack {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .block-stack h3 {
+    margin-bottom: var(--space-4);
+  }
+</style>

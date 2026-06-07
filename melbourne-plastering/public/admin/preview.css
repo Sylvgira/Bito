@@ -1,0 +1,221 @@
+:root {
+  --preview-ink: #111111;
+  --preview-muted: #5f6368;
+  --preview-border: #dedede;
+  --preview-soft: #f7f7f7;
+  --preview-brand: #1d4ed8;
+  --preview-white: #ffffff;
+}
+
+body {
+  margin: 0;
+  background: var(--preview-white);
+  color: var(--preview-ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+
+.cms-preview {
+  min-height: 100vh;
+  background: var(--preview-white);
+  color: var(--preview-ink);
+}
+
+.cms-preview__section {
+  padding: 40px;
+  border-bottom: 1px solid var(--preview-border);
+}
+
+.cms-preview__surface {
+  background: var(--preview-soft);
+}
+
+.cms-preview__eyebrow {
+  margin: 0 0 12px;
+  color: var(--preview-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cms-preview h1,
+.cms-preview h2,
+.cms-preview h3 {
+  margin: 0 0 16px;
+  color: var(--preview-ink);
+  line-height: 1.12;
+}
+
+.cms-preview h1 {
+  max-width: 760px;
+  font-size: clamp(38px, 7vw, 72px);
+}
+
+.cms-preview h2 {
+  font-size: 30px;
+}
+
+.cms-preview h3 {
+  font-size: 20px;
+}
+
+.cms-preview p {
+  max-width: 680px;
+  margin: 0 0 18px;
+  color: var(--preview-muted);
+}
+
+.cms-preview__button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.cms-preview__button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: 1px solid var(--preview-brand);
+  border-radius: 4px;
+  background: var(--preview-brand);
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.cms-preview__button--secondary {
+  background: transparent;
+  color: var(--preview-ink);
+  border-color: var(--preview-border);
+}
+
+.cms-preview__hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.7fr);
+  gap: 44px;
+  align-items: center;
+}
+
+.cms-preview__hero--centered {
+  display: block;
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.cms-preview__hero--centered h1,
+.cms-preview__hero--centered p,
+.cms-preview__hero--centered .cms-preview__button-row {
+  margin-inline: auto;
+  justify-content: center;
+}
+
+.cms-preview__hero--media-left .cms-preview__hero-copy {
+  order: 2;
+}
+
+.cms-preview__panel {
+  display: grid;
+  gap: 14px;
+  min-height: 260px;
+  padding: 22px;
+  border: 1px solid var(--preview-border);
+  border-radius: 8px;
+  background: linear-gradient(180deg, var(--preview-soft), var(--preview-white));
+}
+
+.cms-preview__placeholder {
+  min-height: 90px;
+  border: 1px solid var(--preview-border);
+  border-radius: 4px;
+  background: var(--preview-white);
+}
+
+.cms-preview__list {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cms-preview__list li {
+  padding: 12px;
+  border: 1px solid var(--preview-border);
+  border-radius: 4px;
+  background: var(--preview-white);
+  font-weight: 700;
+}
+
+.cms-preview__meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.cms-preview__meta {
+  padding: 18px;
+  border: 1px solid var(--preview-border);
+  border-radius: 8px;
+  background: var(--preview-white);
+}
+
+.cms-preview__meta span {
+  display: block;
+  color: var(--preview-muted);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cms-preview__meta strong {
+  display: block;
+  margin-top: 8px;
+}
+
+.cms-preview__article {
+  max-width: 760px;
+  padding: 40px;
+}
+
+.cms-preview__article-body {
+  color: var(--preview-ink);
+}
+
+.cms-preview__quote {
+  margin: 0;
+  padding: 28px;
+  border-left: 4px solid var(--preview-brand);
+  background: var(--preview-soft);
+}
+
+.cms-preview__embed {
+  padding: 20px;
+  border: 1px solid var(--preview-border);
+  border-radius: 8px;
+  background: var(--preview-soft);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  .cms-preview__section,
+  .cms-preview__article {
+    padding: 24px;
+  }
+
+  .cms-preview__hero,
+  .cms-preview__meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cms-preview__hero--media-left .cms-preview__hero-copy {
+    order: initial;
+  }
+}

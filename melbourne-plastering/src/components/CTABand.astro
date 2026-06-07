@@ -1,0 +1,74 @@
+---
+interface Props {
+  title: string;
+  text: string;
+  label?: string;
+  href?: string;
+  variant?: 'band' | 'split' | 'inline';
+}
+
+const { title, text, label = 'Contact us', href = '/contact/', variant = 'band' } = Astro.props;
+---
+
+<section class:list={['cta-band', `cta-band--${variant}`]}>
+  <div class="cta-band__inner container">
+    <div>
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+    <a class="button" href={href}>{label}</a>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    padding-block: var(--section-y-compact);
+    border-block: 1px solid var(--color-rule);
+    background: var(--color-section);
+  }
+
+  .cta-band--split {
+    background: var(--color-page);
+  }
+
+  .cta-band--split .cta-band__inner {
+    padding: var(--space-6);
+    border: 1px solid var(--color-rule);
+    border-radius: var(--radius-md);
+    background: var(--color-section);
+  }
+
+  .cta-band--inline {
+    background: var(--color-page);
+    border-block: 0;
+  }
+
+  .cta-band--inline .cta-band__inner {
+    justify-content: flex-start;
+    padding-block: var(--space-4);
+    border-top: 1px solid var(--color-rule);
+  }
+
+  .cta-band__inner {
+    display: flex;
+    gap: var(--space-6);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cta-band h2 {
+    margin-bottom: var(--space-3);
+  }
+
+  .cta-band p {
+    max-width: 42rem;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 720px) {
+    .cta-band__inner {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

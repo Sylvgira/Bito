@@ -1,0 +1,64 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import CTABand from '@components/CTABand.astro';
+import { formatDate } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts')).filter((post) => !post.data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout
+  title={post.data.seoTitle ?? post.data.title}
+  description={post.data.seoDescription ?? post.data.summary}
+>
+  <article class="post container--narrow">
+    <header>
+      <p class="eyebrow">News</p>
+      <h1>{post.data.title}</h1>
+      <p>{post.data.summary}</p>
+      <time datetime={post.data.publishDate.toISOString()}>{formatDate(post.data.publishDate)}</time>
+    </header>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+  <CTABand
+    title="Thinking about your own project?"
+    text="Call us or send a message — we are happy to talk through your ideas before any commitment."
+  />
+</BaseLayout>
+
+<style>
+  .post {
+    padding-block: var(--section-y-compact) var(--section-y);
+  }
+
+  .post header {
+    margin-bottom: var(--space-7);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .post h1 {
+    margin-bottom: var(--space-4);
+    font-size: clamp(2.5rem, 6vw, 4.4rem);
+  }
+
+  .post header p:not(.eyebrow) {
+    font-size: var(--text-md);
+  }
+
+  time {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+  }
+</style>

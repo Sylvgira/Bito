@@ -1,0 +1,142 @@
+---
+interface Step {
+  label: string;
+  description: string;
+}
+
+interface Props {
+  steps?: Step[];
+}
+
+const {
+  steps = [
+    { label: 'Consultation', description: 'We visit your home, measure the space, and talk through how you want it to work.' },
+    { label: 'Design', description: 'CAD drawings and material samples. You review, we refine, you approve.' },
+    { label: 'Manufacture', description: 'Built in our Thomastown workshop. Every cut, edge, and joint to specification.' },
+    { label: 'Installation', description: 'Fitted by our own team. Clean, on time, and finished to standard.' }
+  ]
+} = Astro.props;
+---
+
+<section class="process-strip" id="process">
+  <div class="container">
+    <div class="process-strip__header">
+      <p class="eyebrow">Our process</p>
+      <h2>How we work</h2>
+    </div>
+    <div class="process-strip__grid grid-12">
+      {steps.map((step, i) => (
+        <div class="process-strip__step">
+          <span class="process-strip__number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3 class="process-strip__label">{step.label}</h3>
+          <p class="process-strip__desc">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /*
+   * ProcessStrip — 4-step horizontal process overview.
+   *
+   * Uses CSS grid for layout and thin vertical dividers between steps.
+   * The step numbers use CSS opacity for a subtle editorial look.
+   *
+   * For complex staggered entrance animations of the steps (e.g. one-by-one
+   * fade-in on scroll), use GSAP + ScrollTrigger (already in package.json):
+   *
+   *   import gsap from 'gsap';
+   *   import { ScrollTrigger } from 'gsap/ScrollTrigger';
+   *   gsap.registerPlugin(ScrollTrigger);
+   *
+   *   gsap.from('.process-strip__step', {
+   *     autoAlpha: 0, y: 24, duration: 0.6, stagger: 0.12,
+   *     scrollTrigger: { trigger: '.process-strip', start: 'top 80%', once: true }
+   *   });
+   */
+  .process-strip {
+    padding-block: var(--section-y);
+  }
+
+  .process-strip__header {
+    margin-bottom: var(--space-7);
+  }
+
+  .process-strip__header h2 {
+    margin-bottom: 0;
+  }
+
+  .process-strip__grid {
+    row-gap: var(--space-6);
+  }
+
+  .process-strip__step {
+    grid-column: span 3;
+    position: relative;
+    padding-right: var(--space-4);
+  }
+
+  .process-strip__step + .process-strip__step::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--space-7) / -2);
+    width: 1px;
+    background: var(--color-border);
+  }
+
+  .process-strip__number {
+    display: block;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    color: var(--color-text-muted);
+    line-height: 1;
+    margin-bottom: var(--space-4);
+    opacity: 0.4;
+  }
+
+  .process-strip__label {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+    color: var(--color-heading);
+  }
+
+  .process-strip__desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .process-strip__step {
+      grid-column: span 6;
+    }
+
+    .process-strip__step:nth-child(3)::before {
+      content: none;
+    }
+
+    .process-strip__step {
+      padding-bottom: var(--space-5);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .process-strip__step {
+      grid-column: 1;
+    }
+
+    .process-strip__step + .process-strip__step::before {
+      content: none;
+    }
+
+    .process-strip__step + .process-strip__step {
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--space-5);
+    }
+  }
+</style>

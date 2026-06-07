@@ -1,0 +1,17 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageIntro from '@components/PageIntro.astro';
+import Section from '@components/Section.astro';
+---
+
+<BaseLayout title="Page not found" description="The requested page could not be found.">
+  <PageIntro
+    eyebrow="404"
+    title="Page not found"
+    intro="The page may have moved, or the address may be incorrect."
+  />
+
+  <Section narrow>
+    <a class="button" href="/">Return home</a>
+  </Section>
+</BaseLayout>
