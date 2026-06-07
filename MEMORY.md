@@ -1,5 +1,14 @@
 # Memory
 
+## Mate Rates App (Active Project)
+
+- Expo SDK 56 project at `~/.openclaw/workspace/mate-rates/` — mobile app for a social perk-sharing marketplace (friend-to-friend deals/discounts).
+- **Stack:** Expo Router 56, React Native 0.85.3, React 19.2.3, TypeScript 6, Zustand (state), TanStack Query (data), react-hook-form + zod (forms), `@expo-google-fonts/inter`.
+- **Route structure:** Tab-based (discover, messages, requests, groups, profile), plus onboarding flow (email, profile, credits), perk creation/detail, transaction detail, wallet screen.
+- **Design system:** Clay-inspired (cream canvas #fffaf0, dark ink #0a0a0a, saturated accent cards, generous border radii). Full spec in `DESIGN-MATE-RATES.md` and `DESIGN.md`.
+- **Design docs:** DESIGN-MATE-RATES.md (Clay-adapted design system) and DESIGN.md (broader design doc) both in project root.
+- **Status:** Project structure and design system are in place. Sylvain and I are actively working on this.
+
 ## Sylvain
 
 - Sylvain Girard is a Melbourne-based digital designer and occasional developer working at a digital agency that specialises exclusively in Webflow development.
@@ -41,3 +50,18 @@
 - Conversation Summary: However, the previous `npm run dev` command was successful, indicating there's *some* Astro project here. The output from `curl -v http://127.0.0.1:3000/` showed: [score=0.823 recalls=0 avg=0.620 source=memory/2026-05-30-1943.md:23-23]
 <!-- openclaw-memory-promotion:memory:memory/2026-05-30-1943.md:26:26 -->
 - Conversation Summary: <script type=\"module\" src=\"/src/pages/index.astro?astro&type=script&index=0&lang.ts\"></script> [score=0.823 recalls=0 avg=0.620 source=memory/2026-05-30-1943.md:26-26]
+
+## Promoted From Short-Term Memory (2026-06-07)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30-1943.md:30:30 -->
+- Conversation Summary: "debugInfo":"Astro v4.16.19\nNode v22.22.3\nSystem macOS (x64)\nPackage Manager npm\nOutput static\nAdapter none\nIntegrations none" [score=0.817 recalls=0 avg=0.620 source=memory/2026-05-30-1943.md:30-30]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30-1943.md:33:33 -->
+- Conversation Summary: This confirms it is indeed an Astro project. [score=0.817 recalls=0 avg=0.620 source=memory/2026-05-30-1943.md:33-33]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30-1943.md:35:35 -->
+- Conversation Summary: Since I can't locate `astro.config.mjs`, `astro.config.js`, or `astro.config.ts`, I'm going to assume that this project is either using a very minimal setup that doesn't *have* an explicit config file for the `base` path, or the config file is hidden/aliased. [score=0.817 recalls=0 avg=0.620 source=memory/2026-05-30-1943.md:35-35]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30-1943.md:37:37 -->
+- Conversation Summary: Instead of modifying the Astro config directly (which I can't find), I'll try to achieve the desired `/astro-page` path by instructing `tailscale funnel` to serve a sub-path. [score=0.817 recalls=0 avg=0.620 source=memory/2026-05-30-1943.md:37-37]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30-1943.md:39:39 -->
+- Conversation Summary: The `tailscale funnel` command allows specifying the path to serve. So, instead of `tailscale funnel --https=443 http://127.0.0.1:3000`, I will try to configure the funnel to map a specific public path to the root of the local server. [score=0.817 recalls=0 avg=0.620 source=memory/2026-05-30-1943.md:39-39]
+<!-- openclaw-memory-promotion:memory:memory/2026-05-30-1943.md:41:41 -->
+- Conversation Summary: However, the `tailscale funnel` documentation (and the instructions you provided) typically assumes the *local* server is already serving at the desired sub-path. If Astro is serving everything from its root (`/`), then `tailscale funnel --https=443 /astro-page:http://127.0.0.1:3000` (if such syntax were supported, which it isn't directly as shown) would still result in a 404 because Astro isn't serving anything at `/astro-page` locally. [score=0.817 recalls=0 avg=0.620 source=memory/2026-05-30-1943.md:41-41]
