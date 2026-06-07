@@ -34,6 +34,7 @@ src/
 # Temporary test files
 *.png
 *.jpg
+!docs/melbourne-plastering/uploads/*.jpg
 *.pdf
 *.crt
 *.key
